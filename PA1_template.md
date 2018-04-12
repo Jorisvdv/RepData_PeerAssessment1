@@ -32,9 +32,12 @@ ggplot(data = totals, aes(x=sum)) +
 
 ![](PA1_template_files/figure-html/mean-steps-1.png)<!-- -->
 
+```r
+totalmean <- mean(totals$sum)
+totalmedian <- median(totals$sum)
+```
 The mean total steps are 9354.23
-and the median total steps are 
-10395.
+and the median total steps are 10395.
 
 ## What is the average daily activity pattern?
 1. Make a time series plot of the 5-minute interval (x-axis) and the average 
@@ -78,6 +81,7 @@ of steps?
 
 ```r
 activity.imputed <- activity[, missingvalue := is.na(steps)]
+amount.missing <- activity[,sum(missingvalue)]
 ```
 The amount of missing values are 2304.  
 
@@ -109,6 +113,13 @@ ggplot(data = totals.imputed
 
 ![](PA1_template_files/figure-html/impute-histogram-1.png)<!-- -->
 
+```r
+totalimmean <- mean(totals.imputed$sum)
+totalimmedian <- median(totals.imputed$sum)
+diffmean <- totalimmean - totalmean
+diffmnedian <- totalimmedian - totalmedian
+```
+
 The mean total steps are, after imputing missing values, 
 10749.77
 and the median total steps are 
@@ -116,8 +127,7 @@ and the median total steps are
 For the mean this is a difference of 
 1395.54 
 steps per day and for the median it was 
-246
-steps per day.
+246 steps per day.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 1. Create a new factor variable in the dataset with two levels – “weekday” and 

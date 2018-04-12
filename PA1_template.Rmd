@@ -28,10 +28,12 @@ ggplot(data = totals, aes(x=sum)) +
     geom_histogram(bins = 5, fill = I("blue"))+
     labs(title = "Total daily steps", x = "Number of steps", y = "Frequency")
 ```
-
-The mean total steps are `r formatC(mean(totals$sum), digits = 2, format = "f")`
-and the median total steps are 
-`r formatC(median(totals$sum), format = "d")`.
+```{r total-stat}
+totalmean <- mean(totals$sum)
+totalmedian <- median(totals$sum)
+```
+The mean total steps are `r formatC(totalmean, digits = 2, format = "f")`
+and the median total steps are `r formatC(totalmedian, format = "d")`.
 
 ## What is the average daily activity pattern?
 1. Make a time series plot of the 5-minute interval (x-axis) and the average 
@@ -47,6 +49,7 @@ ggplot(interval.steps, aes(x = interval, y = meanst))+
     geom_line(color = "blue")+
     labs(title = "Steps per interval", x = "Interval", 
          y = "Mean number of steps")
+
 maxsteps <- interval.steps[which.max(meanst), interval]
 ```
 
@@ -68,8 +71,9 @@ of steps?
 
 ```{r amount-missing}
 activity.imputed <- activity[, missingvalue := is.na(steps)]
+amount.missing <- activity[,sum(missingvalue)]
 ```
-The amount of missing values are `r activity[,sum(missingvalue)]`.  
+The amount of missing values are `r amount.missing`.  
 
 ```{r impute-missing}
 # Create function to look up the average amount of steps for a specific interval
@@ -93,17 +97,21 @@ ggplot(data = totals.imputed
     geom_histogram(bins = 5, fill = I("blue"))+
     labs(title = "Total daily steps (imputed)", x = "Number of steps", 
          y = "Frequency")
+
+totalimmean <- mean(totals.imputed$sum)
+totalimmedian <- median(totals.imputed$sum)
+diffmean <- totalimmean - totalmean
+diffmnedian <- totalimmedian - totalmedian
 ```
 
 The mean total steps are, after imputing missing values, 
-`r formatC(mean(totals.imputed$sum), digits = 2, format = "f")`
+`r formatC(totalimmean, digits = 2, format = "f")`
 and the median total steps are 
-`r formatC(median(totals.imputed$sum), format = "d")`.  
+`r formatC(totalimmedian, format = "d")`.  
 For the mean this is a difference of 
-`r formatC(mean(totals.imputed$sum) - mean(totals$sum), digits = 2, format = "f")` 
+`r formatC(diffmean, digits = 2, format = "f")` 
 steps per day and for the median it was 
-`r formatC(median(totals.imputed$sum) - median(totals$sum), format = "d")`
-steps per day.
+`r formatC(diffmnedian, format = "d")` steps per day.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 1. Create a new factor variable in the dataset with two levels – “weekday” and 
