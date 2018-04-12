@@ -30,7 +30,7 @@ ggplot(data = totals, aes(x=sum)) +
     labs(title = "Total daily steps", x = "Number of steps", y = "Frequency")
 ```
 
-![](Activity_Analysis_files/figure-html/mean-steps-1.png)<!-- -->
+![](PA1_template_files/figure-html/mean-steps-1.png)<!-- -->
 
 The mean total steps are 9354.23
 and the median total steps are 
@@ -53,7 +53,7 @@ ggplot(interval.steps, aes(x = interval, y = meanst))+
          y = "Mean number of steps")
 ```
 
-![](Activity_Analysis_files/figure-html/daily-activity-1.png)<!-- -->
+![](PA1_template_files/figure-html/daily-activity-1.png)<!-- -->
 
 ```r
 maxsteps <- interval.steps[which.max(meanst), interval]
@@ -107,7 +107,7 @@ ggplot(data = totals.imputed
          y = "Frequency")
 ```
 
-![](Activity_Analysis_files/figure-html/impute-histogram-1.png)<!-- -->
+![](PA1_template_files/figure-html/impute-histogram-1.png)<!-- -->
 
 The mean total steps are, after imputing missing values, 
 10749.77
@@ -148,7 +148,7 @@ ggplot(interval.week, aes(x = interval, y = meanst))+
     facet_grid(weekday.var~.)
 ```
 
-![](Activity_Analysis_files/figure-html/weekdays-weekends-1.png)<!-- -->
+![](PA1_template_files/figure-html/weekdays-weekends-1.png)<!-- -->
 
 ```r
 #Change locale to previous setting
